@@ -7,13 +7,14 @@ import { Header } from "../components/Header"
 import { Footer } from "../components/Footer"
 import { Layout } from "../components/Layout"
 import { Content } from "../components/Content"
+import { pollingInterval } from "../consts/env"
 
 const config: Config = {
   readOnlyChainId: Goerli.chainId,
   readOnlyUrls: {
     [Goerli.chainId]: process.env.NEXT_PUBLIC_ETH_API_URL as string
   },
-  pollingInterval: 21_000
+  pollingInterval
 }
 
 const theme = createTheme()

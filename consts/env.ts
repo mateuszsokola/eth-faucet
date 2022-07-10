@@ -4,3 +4,5 @@ export const defaultEthAmount =
     : 0.25
 
 export const defaultWeiAmount = BigInt(defaultEthAmount * 10 ** 18)
+
+export const pollingInterval = 20_000
