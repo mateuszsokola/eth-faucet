@@ -7,7 +7,6 @@ import { Header } from "../components/Header"
 import { Footer } from "../components/Footer"
 import { Layout } from "../components/Layout"
 import { Content } from "../components/Content"
-import "../styles/main.css"
 
 const config: Config = {
   readOnlyChainId: Goerli.chainId,
