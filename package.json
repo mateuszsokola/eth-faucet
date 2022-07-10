@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
+    "create-wallet": "ts-node ./_scripts/createWallet.ts",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
