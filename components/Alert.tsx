@@ -1,7 +1,7 @@
-import { Alert as MuiAlert, styled } from "@mui/material"
+import { Alert as MuiAlert, AlertProps, styled } from "@mui/material"
 
 const StyledAlert = styled(MuiAlert)(({ theme }) => ({
   marginTop: theme.spacing(2)
 }))
 
-export const Alert = ({ children }: { children: any }) => <StyledAlert severity="error">{children}</StyledAlert>
+export const Alert = ({ children, severity }: AlertProps) => <StyledAlert severity={severity}>{children}</StyledAlert>

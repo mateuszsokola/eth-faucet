@@ -16,6 +16,7 @@ import { defaultWeiAmount } from "../consts/env"
 const Home: NextPage = () => {
   const { account, library, isLoading, activateBrowserWallet, switchNetwork, chainId } = useEthers()
   const [balance, setBalance] = useState<BigNumber | undefined>(undefined)
+  const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>(undefined)
 
   const claimGorliEth = async () => {
@@ -33,7 +34,10 @@ const Home: NextPage = () => {
       const signature = await signer.signMessage(message)
 
       await claimTokens(account as string, message, signature)
+      setSuccess(true)
     } catch (e: any) {
+      setSuccess(false)
+
       if (e.name === "AxiosError" && e.response.data.message) {
         setError(e.response.data.message)
         return
@@ -96,7 +100,8 @@ const Home: NextPage = () => {
         <span>{formatEther(defaultWeiAmount)} ETH (testnet)</span>
       </Item>
       {renderButton()}
-      {error && <Alert>{error}</Alert>}
+      {success && !error && <Alert severity="success">Görli ETH has been dispatched to your wallet</Alert>}
+      {!success && error && <Alert severity="error">{error}</Alert>}
     </RoundedBox>
   )
 }
