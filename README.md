@@ -51,3 +51,26 @@ Set the `NEXT_PUBLIC_DEFAULT_ETH_AMOUNT` variable in your `.env` file. For examp
 ```
 NEXT_PUBLIC_DEFAULT_ETH_AMOUNT=5 # 5 ETH per claim
 ```
+
+## Restricting users to claim Görli ETH once per day
+
+If you want to restrict users from draining your wallet, you should enable transaction checks. You can do it by setting `ENABLE_TRANSACTION_CHECKS` in your `.env` file. The supported transaction history scanners you can find here:
+
+| Parameter                   | Type                          | Description                                                           |
+| :-------------------------- | :---------------------------- | :-------------------------------------------------------------------- |
+| `ENABLE_TRANSACTION_CHECKS` | `none` (default), `etherscan` | Enables transaction checks to prevent users from draining your wallet |
+
+### Etherscan
+
+To scan blockchain history for transactions you should use Etherscan History API. Just set `ENABLE_TRANSACTION_CHECKS` to `etherscan` and add the `ETHERSCAN_API_KEY` in your `.env` file.
+
+| Parameter           | Type     | Description                                       |
+| :------------------ | :------- | :------------------------------------------------ |
+| `ETHERSCAN_API_KEY` | `string` | **Required**. Etherscan API key for Görli testnet |
+
+```
+ENABLE_TRANSACTION_CHECKS=etherscan
+ETHERSCAN_API_KEY=00000000000000000000000000000000
+```
+
+You can [create a new API Key on Etherscan](https://docs.etherscan.io/getting-started/viewing-api-usage-statistics). It’s free of charge.

@@ -6,3 +6,5 @@ export const defaultEthAmount =
 export const defaultWeiAmount = BigInt(defaultEthAmount * 10 ** 18)
 
 export const pollingInterval = 20_000
+
+export const defaultBlockLayover = 5400 // ~24h, 16s per block on Görli
