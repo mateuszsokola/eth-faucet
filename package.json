@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "latest",
     "@emotion/styled": "latest",
+    "@metamask/detect-provider": "latest",
     "@metamask/eth-sig-util": "latest",
     "@mui/icons-material": "latest",
     "@mui/lab": "latest",
