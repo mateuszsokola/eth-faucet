@@ -132,7 +132,7 @@ const Home: NextPage = () => {
         <span>{formatEther(defaultWeiAmount)} ETH (testnet)</span>
       </Item>
       {renderButton()}
-      {success && !error && <Alert severity="success">Görli ETH has been dispatched to your wallet</Alert>}
+      {success && !error && <Alert severity="success">Görli ETH has been dispatched to your wallet. You should receive it within 3 minutes.</Alert>}
       {!success && error && <Alert severity="error">{error}</Alert>}
     </RoundedBox>
   )
