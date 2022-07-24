@@ -18,7 +18,7 @@ export const Header = () => {
     <HeaderDiv>
       <Typography variant="h1">Claim Görli ETH</Typography>
       <Typography variant="body2">
-        <b>Görli ETH has no monetary value.</b> It means you can’t sell it or exchange it for any goods or services. The
+        <b>Görli ETH has no monetary value.</b> It means you can’t sell or exchange it for any goods or services. The
         only utility it has is testing your decentralized application (DApp).
       </Typography>
     </HeaderDiv>
