@@ -19,4 +19,8 @@ export class EtherscanTransactionHistory implements TransactionHistory {
 
     return false
   }
+
+  async recordTransaction(_: string) {
+    // do nothing
+  }
 }

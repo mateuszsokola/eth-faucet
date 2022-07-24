@@ -56,13 +56,13 @@ NEXT_PUBLIC_DEFAULT_ETH_AMOUNT=5 # 5 ETH per claim
 
 If you want to restrict users from draining your wallet, you should enable transaction checks. You can do it by setting `ENABLE_TRANSACTION_CHECKS` in your `.env` file. The supported transaction history scanners you can find here:
 
-| Parameter                   | Type                          | Description                                                           |
-| :-------------------------- | :---------------------------- | :-------------------------------------------------------------------- |
-| `ENABLE_TRANSACTION_CHECKS` | `none` (default), `etherscan` | Enables transaction checks to prevent users from draining your wallet |
+| Parameter                   | Type                                   | Description                                                           |
+| :-------------------------- | :------------------------------------- | :-------------------------------------------------------------------- |
+| `ENABLE_TRANSACTION_CHECKS` | `none` (default), `etherscan`, `redis` | Enables transaction checks to prevent users from draining your wallet |
 
 ### Etherscan
 
-To scan blockchain history for transactions you should use Etherscan History API. Just set `ENABLE_TRANSACTION_CHECKS` to `etherscan` and add the `ETHERSCAN_API_KEY` in your `.env` file.
+To scan blockchain history for transactions you should use Etherscan History API. Just set `ENABLE_TRANSACTION_CHECKS` to `etherscan` and add `ETHERSCAN_API_KEY` in your `.env` file.
 
 | Parameter           | Type     | Description                                       |
 | :------------------ | :------- | :------------------------------------------------ |
@@ -74,3 +74,18 @@ ETHERSCAN_API_KEY=00000000000000000000000000000000
 ```
 
 You can [create a new API Key on Etherscan](https://docs.etherscan.io/getting-started/viewing-api-usage-statistics). It’s free of charge.
+
+### Redis
+
+If you want to record transaction history in database I recommend to use Redis. Just set `ENABLE_TRANSACTION_CHECKS` to `redis` and add `REDIS_URL` in your `.env` file.
+
+| Parameter   | Type     | Description                           |
+| :---------- | :------- | :------------------------------------ |
+| `REDIS_URL` | `string` | **Required**. Redis connection string |
+
+```
+ENABLE_TRANSACTION_CHECKS=redis
+REDIS_URL=rediss://user:password@redis:6379
+```
+
+You can [create a Redis database on Upstash.com](https://upstash.com/). It’s free for the first 10.000 requests per month.

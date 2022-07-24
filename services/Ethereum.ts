@@ -27,6 +27,13 @@ export class Ethereum implements Blockchain {
         value
       }
       await this.wallet.sendTransaction(transaction)
+
+      // Added after the video was released to prevent user from draining system's wallet
+      if (this.transactionHistoryService === undefined) {
+        return
+      }
+
+      await this.transactionHistoryService.recordTransaction(address)
     } catch (e: any) {
       if (e?.code === "INSUFFICIENT_FUNDS") {
         throw new InsufficientFundsError()

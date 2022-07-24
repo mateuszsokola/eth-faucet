@@ -1,3 +1,4 @@
 export interface TransactionHistory {
-  hasReceivedTokens: (address: string, blockSpan?: number) => Promise<boolean>
+  hasReceivedTokens: (address: string, minLayover?: number) => Promise<boolean>
+  recordTransaction: (address: string) => Promise<void>
 }

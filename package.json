@@ -20,6 +20,7 @@
     "@usedapp/core": "latest",
     "axios": "latest",
     "ethers": "latest",
+    "ioredis": "latest",
     "lodash": "latest",
     "next": "12.1.6",
     "react": "18.1.0",
