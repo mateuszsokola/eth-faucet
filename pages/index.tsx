@@ -118,7 +118,7 @@ const Home: NextPage = () => {
       </Item>
       <Item>
         <span>Claimable Görli ETH</span>
-        <span>{formatEther(retrieveAmount(account || ""))} ETH (testnet)</span>
+        <span>{formatEther(retrieveAmount(account))} ETH (testnet)</span>
       </Item>
       {renderButton()}
       {success && !error && (

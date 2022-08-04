@@ -5,7 +5,7 @@ import { WalletClassification } from "../services/WalletClassification"
 export const useWalletClassification = () => {
   const classificationService = new WalletClassification(privilegedWallets)
 
-  const retriveAmount = useCallback((address: string) => {
+  const retriveAmount = useCallback((address: string | undefined) => {
     return classificationService.retrieveAmount(address)
   }, [])
 
