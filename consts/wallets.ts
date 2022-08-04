@@ -1,1 +1,1 @@
-export const priviligedWallets = []
+export const privilegedWallets = []

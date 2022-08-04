@@ -1,6 +1,6 @@
 import { Goerli } from "@usedapp/core"
 import { ethers } from "ethers"
-import { priviligedWallets } from "../consts/wallets"
+import { privilegedWallets } from "../consts/wallets"
 import { Ethereum } from "../services/Ethereum"
 import { TimestampNonce } from "../services/TimestampNonce"
 import { WalletClassification } from "../services/WalletClassification"
@@ -8,7 +8,7 @@ import { bootstrapTransactionHistory } from "./bootstrapTransactionHistory"
 
 export const bootstrapEthereum = (chainId: number = Goerli.chainId) => {
   // Wallet Classification Service
-  const classificationService = new WalletClassification(priviligedWallets)
+  const classificationService = new WalletClassification(privilegedWallets)
 
   // Transaction History Service
   const transactionHistoryService = bootstrapTransactionHistory(chainId)

@@ -1,20 +1,15 @@
-import {
-  defaultWalletEthAmount,
-  defaultWalletWeiAmount,
-  priviligedWalletEthAmount,
-  priviligedWalletWeiAmount
-} from "../consts/env"
+import { defaultWalletWeiAmount, privilegedWalletWeiAmount } from "../consts/env"
 
 export class WalletClassification {
   constructor(private readonly addresses: string[] = []) {}
 
-  isPriviliged(address: string) {
+  isPrivileged(address: string) {
     return this.addresses.includes(address)
   }
 
   retrieveAmount(address: string) {
-    if (this.isPriviliged(address)) {
-      return priviligedWalletWeiAmount
+    if (this.isPrivileged(address)) {
+      return privilegedWalletWeiAmount
     }
 
     return defaultWalletWeiAmount
