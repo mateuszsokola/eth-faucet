@@ -64,13 +64,13 @@ const Home: NextPage = () => {
 
   const detectMetamask = async () => {
     const provider = await detectEthereumProvider({ mustBeMetaMask: true })
-
+    
     if (provider) {
       setInstalled(true)
     }
   }
 
-  const renderButton = useCallback(() => {
+  const RenderButton = () => {
     if (!installed) {
       return (
         <Link href="https://metamask.io/download/" passHref>
@@ -106,7 +106,7 @@ const Home: NextPage = () => {
         Claim Görli ETH
       </Button>
     )
-  }, [isLoading, account, chainId])
+  }
 
   useEffect(() => {
     detectMetamask()
@@ -131,7 +131,7 @@ const Home: NextPage = () => {
         <span>Claimable Görli ETH</span>
         <span>{formatEther(defaultWeiAmount)} ETH (testnet)</span>
       </Item>
-      {renderButton()}
+      <RenderButton/>
       {success && !error && <Alert severity="success">Görli ETH has been dispatched to your wallet. You should receive it within 3 minutes.</Alert>}
       {!success && error && <Alert severity="error">{error}</Alert>}
     </RoundedBox>
