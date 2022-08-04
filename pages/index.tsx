@@ -2,15 +2,13 @@ import type { NextPage } from "next"
 import { formatEther } from "@ethersproject/units"
 import { Button } from "@mui/material"
 import LoadingButton from "@mui/lab/LoadingButton"
-import { Goerli, useEthers } from "@usedapp/core"
-import { useCallback, useEffect, useRef, useState } from "react"
-import { BigNumber } from "ethers"
+import { Goerli, useEtherBalance, useEthers } from "@usedapp/core"
+import { useCallback, useState } from "react"
 import { isNil } from "lodash"
 import Link from "next/link"
 import { Alert } from "../components/Alert"
 import { Item } from "../components/Item"
 import { RoundedBox } from "../components/RoundedBox"
-import { pollingInterval } from "../consts/env"
 import { hasMetamask } from "../hooks/hasMetamask"
 import { useWalletClassification } from "../hooks/useWalletClassification"
 import { claimTokens, retrieveNonce } from "../services/HttpClient"
@@ -18,11 +16,10 @@ import { messageTemplate } from "../utils/textMessage"
 
 const Home: NextPage = () => {
   const { account, library, isLoading: loading, activateBrowserWallet, switchNetwork, chainId } = useEthers()
-  const [balance, setBalance] = useState<BigNumber | undefined>(undefined)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>(undefined)
-  const refreshRef = useRef<NodeJS.Timeout | null>(null)
   const installed = hasMetamask()
+  const balance = useEtherBalance(account, { refresh: "everyBlock" })
   const [retrieveAmount] = useWalletClassification()
 
   const claimGorliEth = async () => {
@@ -51,16 +48,6 @@ const Home: NextPage = () => {
 
       setError(e?.message || "Something went wrong")
     }
-  }
-
-  const retrieveBalance = async () => {
-    if (isNil(library) || isNil(account)) {
-      setBalance(undefined)
-      return
-    }
-
-    const balance = await library.getBalance(account)
-    setBalance(balance)
   }
 
   const renderButton = useCallback(() => {
@@ -100,15 +87,6 @@ const Home: NextPage = () => {
       </Button>
     )
   }, [loading, account, chainId, installed])
-
-  useEffect(() => {
-    retrieveBalance()
-    refreshRef.current = setTimeout(retrieveBalance, pollingInterval)
-
-    return () => {
-      refreshRef.current && clearTimeout(refreshRef.current)
-    }
-  }, [balance, account, library])
 
   return (
     <RoundedBox>
