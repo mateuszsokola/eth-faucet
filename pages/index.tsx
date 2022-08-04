@@ -10,8 +10,9 @@ import Link from "next/link"
 import { Alert } from "../components/Alert"
 import { Item } from "../components/Item"
 import { RoundedBox } from "../components/RoundedBox"
-import { defaultWeiAmount, pollingInterval } from "../consts/env"
+import { pollingInterval } from "../consts/env"
 import { hasMetamask } from "../hooks/hasMetamask"
+import { useWalletClassification } from "../hooks/useWalletClassification"
 import { claimTokens, retrieveNonce } from "../services/HttpClient"
 import { messageTemplate } from "../utils/textMessage"
 
@@ -22,6 +23,7 @@ const Home: NextPage = () => {
   const [error, setError] = useState<string | undefined>(undefined)
   const refreshRef = useRef<NodeJS.Timeout | null>(null)
   const installed = hasMetamask()
+  const [retrieveAmount] = useWalletClassification()
 
   const claimGorliEth = async () => {
     try {
@@ -116,7 +118,7 @@ const Home: NextPage = () => {
       </Item>
       <Item>
         <span>Claimable Görli ETH</span>
-        <span>{formatEther(defaultWeiAmount)} ETH (testnet)</span>
+        <span>{formatEther(retrieveAmount(account))} ETH (testnet)</span>
       </Item>
       {renderButton()}
       {success && !error && (
