@@ -105,7 +105,7 @@ NEXT_PUBLIC_PRIVILEGED_WALLET_ETH_AMOUNT=64 # 64 ETH per claim
 
 ### How to define privileged wallets?
 
-At the current moment, you will need to fork this repository and add them into [this file](consts/wallets.ts).
+At the current moment, you will need to fork this repository and add wallet addresses into [consts/wallets.ts](consts/wallets.ts) file.
 
 ```
 # Example
