@@ -3,7 +3,6 @@ import { formatEther } from "@ethersproject/units"
 import { Button } from "@mui/material"
 import LoadingButton from "@mui/lab/LoadingButton"
 import { Goerli, useEthers } from "@usedapp/core"
-import detectEthereumProvider from "@metamask/detect-provider"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { BigNumber } from "ethers"
 import { isNil } from "lodash"
@@ -12,17 +11,17 @@ import { Alert } from "../components/Alert"
 import { Item } from "../components/Item"
 import { RoundedBox } from "../components/RoundedBox"
 import { defaultWeiAmount, pollingInterval } from "../consts/env"
+import { hasMetamask } from "../hooks/hasMetamask"
 import { claimTokens, retrieveNonce } from "../services/HttpClient"
 import { messageTemplate } from "../utils/textMessage"
 
 const Home: NextPage = () => {
-  const { account, library, isLoading, activateBrowserWallet, switchNetwork, chainId } = useEthers()
+  const { account, library, isLoading: loading, activateBrowserWallet, switchNetwork, chainId } = useEthers()
   const [balance, setBalance] = useState<BigNumber | undefined>(undefined)
-  // Metamask
-  const [installed, setInstalled] = useState<boolean>(false)
   const [success, setSuccess] = useState<boolean>(false)
   const [error, setError] = useState<string | undefined>(undefined)
   const refreshRef = useRef<NodeJS.Timeout | null>(null)
+  const installed = hasMetamask()
 
   const claimGorliEth = async () => {
     try {
@@ -62,14 +61,6 @@ const Home: NextPage = () => {
     setBalance(balance)
   }
 
-  const detectMetamask = async () => {
-    const provider = await detectEthereumProvider({ mustBeMetaMask: true })
-
-    if (provider) {
-      setInstalled(true)
-    }
-  }
-
   const renderButton = useCallback(() => {
     if (!installed) {
       return (
@@ -81,7 +72,7 @@ const Home: NextPage = () => {
       )
     }
 
-    if (isLoading) {
+    if (loading) {
       return <LoadingButton variant="contained" loading fullWidth />
     }
 
@@ -106,11 +97,7 @@ const Home: NextPage = () => {
         Claim Görli ETH
       </Button>
     )
-  }, [isLoading, account, chainId])
-
-  useEffect(() => {
-    detectMetamask()
-  }, [])
+  }, [loading, account, chainId, installed])
 
   useEffect(() => {
     retrieveBalance()
@@ -132,7 +119,11 @@ const Home: NextPage = () => {
         <span>{formatEther(defaultWeiAmount)} ETH (testnet)</span>
       </Item>
       {renderButton()}
-      {success && !error && <Alert severity="success">Görli ETH has been dispatched to your wallet. You should receive it within 3 minutes.</Alert>}
+      {success && !error && (
+        <Alert severity="success">
+          Görli ETH has been dispatched to your wallet. You should receive it within 3 minutes.
+        </Alert>
+      )}
       {!success && error && <Alert severity="error">{error}</Alert>}
     </RoundedBox>
   )

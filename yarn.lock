@@ -952,7 +952,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@metamask/detect-provider@latest, @metamask/detect-provider@npm:^1.2.0":
+"@metamask/detect-provider@npm:^1.2.0":
   version: 1.2.0
   resolution: "@metamask/detect-provider@npm:1.2.0"
   checksum: 2c152534a8dd15bc1430bb5159cdf58993549a644cff344a1ff43f4ede8f041aad72b909e822747f6545de3ed293a740ecffc86a859daf7a925c4096efd61eb3
@@ -2743,7 +2743,6 @@ axios@latest:
   dependencies:
     "@emotion/react": latest
     "@emotion/styled": latest
-    "@metamask/detect-provider": latest
     "@metamask/eth-sig-util": latest
     "@mui/icons-material": latest
     "@mui/lab": latest
