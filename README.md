@@ -29,7 +29,8 @@ export WALLET_PRIVATE_KEY=0x0000000000000000000000000000000000000000000000000000
 ```
 WALLET_PRIVATE_KEY=0x0000000000000000000000000000000000000000000000000000000000000000
 NEXT_PUBLIC_ETH_API_URL=https://goerli.infura.io/v3/00000000000000000000000000000000
-NEXT_PUBLIC_DEFAULT_ETH_AMOUNT=0.25 # This one is optional
+NEXT_PUBLIC_DEFAULT_WALLET_ETH_AMOUNT=0.25 # Optional
+NEXT_PUBLIC_PRIVILEGED_WALLET_ETH_AMOUNT=1 # Optional
 ```
 
 4. Finally, we can run our app:
@@ -46,10 +47,10 @@ You can use [this faucet](https://goerli-faucet.mudit.blog/) to request some tes
 
 ## How to change amount of distributed Görli ETH?
 
-Set the `NEXT_PUBLIC_DEFAULT_ETH_AMOUNT` variable in your `.env` file. For example:
+Set the `NEXT_PUBLIC_DEFAULT_WALLET_ETH_AMOUNT` variable in your `.env` file. For example:
 
 ```
-NEXT_PUBLIC_DEFAULT_ETH_AMOUNT=5 # 5 ETH per claim
+NEXT_PUBLIC_DEFAULT_WALLET_ETH_AMOUNT=5 # 5 ETH per claim
 ```
 
 ## Restricting users to claim Görli ETH once per day
@@ -89,3 +90,30 @@ REDIS_URL=rediss://user:password@redis:6379
 ```
 
 You can [create a Redis database on Upstash.com](https://upstash.com/). It’s free for the first 10.000 requests per month.
+
+## Privileged wallets
+
+From now on, the faucet supports priviledged wallets. The riviledged wallet can receive higher amounts of tokens per request and the limits are not apply to them.
+
+### How to define amount of distributed Görli ETH to privileged wallets?
+
+Set the `NEXT_PUBLIC_PRIVILEGED_WALLET_ETH_AMOUNT` variable in your `.env` file. For example:
+
+```
+NEXT_PUBLIC_PRIVILEGED_WALLET_ETH_AMOUNT=64 # 64 ETH per claim
+```
+
+### How to define privileged wallets?
+
+At the current moment, you will need to fork this repository and add wallet addresses into [consts/wallets.ts](consts/wallets.ts) file.
+
+```
+# Example
+export const privilegedWallets = [
+  "0x0000000000000000000000000000000000000000000000000000000000000001",
+  "0x0000000000000000000000000000000000000000000000000000000000000002",
+  "0x0000000000000000000000000000000000000000000000000000000000000003",
+  ...,
+  "0x0000000000000000000000000000000000000000000000000000000000009999"
+]
+```
