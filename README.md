@@ -9,7 +9,8 @@ Live version: **[eth-faucet-alpha.vercel.app](https://eth-faucet-alpha.vercel.ap
 1. First, create a new Ethereum wallet:
 
 ```bash
-yarn create-wallet
+npm add ts-node
+NODE_OPTIONS=--openssl-legacy-provider yarn create-wallet
 ```
 
 You should receive wallet credentials printed to your console:
