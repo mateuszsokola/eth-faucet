@@ -66,7 +66,7 @@ export class Ethereum implements Blockchain {
     return true
   }
 
-  async verifyReceiver(address: string): Promise<void> {
+  async isEligible(address: string): Promise<void> {
     // Privileged wallets aren’t checked for eligibility
     if (this.classificationService.isPrivileged(address)) {
       return

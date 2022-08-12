@@ -20,7 +20,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse
     const { address, message, signature }: ClaimParams = req.body
 
     await ethereum.verifyMessage(address, message, signature)
-    await ethereum.verifyReceiver(address)
+    await ethereum.isEligible(address)
     await ethereum.fundWallet(address)
 
     return res.status(200).json({ status: "ok" })
