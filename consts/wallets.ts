@@ -1,4 +1,6 @@
-export const privilegedWallets = [
+import { normalizeAddress } from "../utils/ethAddressUtils"
+
+const rawPrivilegedWallets = [
   "0xd5e73f9199E67b6Ff8DFACE1767A1BDAdf1A7242",
   "0xbd9003EAF07503C80dBdfe11a787c678598Ab868",
   "0x0BE3b5Fb97A02Ad6caC9930Ea1ef684063080316",
@@ -10,3 +12,5 @@ export const privilegedWallets = [
   "0xaD2143748ce26940952B221775f5D683E4572f7B",
   "0x1718724AeC24b2Ef11c60754DC99272E5b9d14FF"
 ]
+
+export const privilegedWallets = rawPrivilegedWallets.map(normalizeAddress)
