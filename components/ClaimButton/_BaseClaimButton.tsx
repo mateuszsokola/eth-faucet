@@ -3,16 +3,17 @@ import LoadingButton from "@mui/lab/LoadingButton"
 import { Goerli, useEthers } from "@usedapp/core"
 import { isNil } from "lodash"
 import Link from "next/link"
-import { hasMetamask } from "../hooks/hasMetamask"
-import { claimTokens, retrieveNonce } from "../services/HttpClient"
-import { messageTemplate } from "../utils/textMessage"
+import { hasMetamask } from "../../hooks/hasMetamask"
+import { claimTokens, retrieveNonce } from "../../services/HttpClient"
+import { messageTemplate } from "../../utils/textMessage"
 
-type ClaimButtonProps = {
+type BaseClaimButtonProps = {
   onSuccess: () => void
   onError: (message: string) => void
+  retrieveCaptcha: () => Promise<string>
 }
 
-export const ClaimButton = ({ onSuccess, onError }: ClaimButtonProps) => {
+export const BaseClaimButton = ({ onSuccess, onError, retrieveCaptcha }: BaseClaimButtonProps) => {
   const { account, library, isLoading: loading, activateBrowserWallet, switchNetwork, chainId } = useEthers()
   const installed = hasMetamask()
 
@@ -22,13 +23,15 @@ export const ClaimButton = ({ onSuccess, onError }: ClaimButtonProps) => {
         throw new Error("Wallet is not connected")
       }
 
+      const captchaToken = await retrieveCaptcha()
+
       const nonce = await retrieveNonce()
       const message = messageTemplate(nonce)
 
       const signer = library.getSigner()
       const signature = await signer.signMessage(message)
 
-      await claimTokens(account as string, message, signature)
+      await claimTokens(account as string, message, signature, captchaToken)
       onSuccess()
     } catch (e: any) {
       if (e.name === "AxiosError" && e.response.data.message) {

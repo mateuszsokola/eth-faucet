@@ -8,6 +8,6 @@ export const retrieveNonce = async () => {
   return response.data.nonce
 }
 
-export const claimTokens = async (address: string, message: string, signature: string) => {
-  return await httpClient.post("/claim", { address, message, signature }).then(({ data }) => data)
+export const claimTokens = async (address: string, message: string, signature: string, captcha: string) => {
+  return await httpClient.post("/claim", { address, message, signature, captcha }).then(({ data }) => data)
 }
