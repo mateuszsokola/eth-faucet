@@ -53,6 +53,31 @@ Set the `NEXT_PUBLIC_DEFAULT_WALLET_ETH_AMOUNT` variable in your `.env` file. Fo
 NEXT_PUBLIC_DEFAULT_WALLET_ETH_AMOUNT=5 # 5 ETH per claim
 ```
 
+## Use captcha
+
+If you want to prevent bots from draining your wallet, you should use some captcha verification system. You can do it by setting `NEXT_PUBLIC_ENABLE_CAPTCHA` in your `.env` file. At the moment we support only Google ReCaptcha v3.
+
+| Parameter                    | Type                             | Description                  |
+| :--------------------------- | :------------------------------- | :--------------------------- |
+| `NEXT_PUBLIC_ENABLE_CAPTCHA` | `none` (default), `recaptcha_v3` | Enables captcha verification |
+
+### Google ReCaptcha v3
+
+If you want to use Google ReCaptcha v3 to verify captchas. Just set `NEXT_PUBLIC_ENABLE_CAPTCHA` to `recaptcha_v3`, than add `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` in your `.env` file.
+
+| Parameter                        | Type     | Description                     |
+| :------------------------------- | :------- | :------------------------------ |
+| `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` | `string` | **Required**. Front-end API key |
+| `RECAPTCHA_SECRET_KEY`           | `string` | **Required**. Back-end API key  |
+
+```
+NEXT_PUBLIC_ENABLE_CAPTCHA=recaptcha_v3
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=0000000000000000000000000000000000000000
+RECAPTCHA_SECRET_KEY=0000000000000000000000000000000000000000
+```
+
+You can [create a new API Key here](https://www.google.com/recaptcha/intro/v3.html). It’s free of charge (there are some limits though).
+
 ## Restricting users to claim Görli ETH once per day
 
 If you want to restrict users from draining your wallet, you should enable transaction checks. You can do it by setting `ENABLE_TRANSACTION_CHECKS` in your `.env` file. The supported transaction history scanners you can find here:

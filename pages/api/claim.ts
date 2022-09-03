@@ -1,24 +1,31 @@
 import type { NextApiRequest, NextApiResponse } from "next"
 import { InsufficientFundsError } from "../../errors/InsufficientFundsError"
+import { InvalidCaptcha } from "../../errors/InvalidCaptcha"
 import { NonceExpiredError } from "../../errors/NonceExpiredError"
 import { NonEmptyWalletError } from "../../errors/NonEmptyWalletError"
 import { SignatureMismatchError } from "../../errors/SignatureMismatchError"
 import { WalletAlreadyFunded } from "../../errors/WalletAlreadyFunded"
 import { DefaultResponse } from "../../interfaces/Response"
+import { bootstrapCaptcha } from "../../utils/bootstrapCaptcha"
 import { bootstrapEthereum } from "../../utils/bootstrapEthereum"
 
 type ClaimParams = {
   address: string
   message: string
   signature: string
+  captcha: string
 }
 
 const handler = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse>) => {
   try {
     const ethereum = bootstrapEthereum()
+    const captcha = bootstrapCaptcha()
 
-    const { address, message, signature }: ClaimParams = req.body
+    const { address, message, signature, captcha: captchaToken }: ClaimParams = req.body
 
+    if (captcha) {
+      await captcha.verifyCaptcha(captchaToken)
+    }
     await ethereum.verifyMessage(address, message, signature)
     await ethereum.isEligible(address)
     await ethereum.fundWallet(address)
@@ -26,6 +33,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<DefaultResponse
     return res.status(200).json({ status: "ok" })
   } catch (e) {
     if (
+      e instanceof InvalidCaptcha ||
       e instanceof NonceExpiredError ||
       e instanceof SignatureMismatchError ||
       e instanceof InsufficientFundsError ||

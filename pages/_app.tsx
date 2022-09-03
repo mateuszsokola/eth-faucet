@@ -8,6 +8,7 @@ import { Footer } from "../components/Footer"
 import { Layout } from "../components/Layout"
 import { Content } from "../components/Content"
 import { pollingInterval } from "../consts/env"
+import { CaptchaProvider } from "../components/CaptchaProvider"
 
 const config: Config = {
   readOnlyChainId: Goerli.chainId,
@@ -16,7 +17,6 @@ const config: Config = {
   },
   pollingInterval
 }
-
 const theme = createTheme()
 
 const EthereumFaucet = ({ Component, pageProps }: AppProps) => (
@@ -24,19 +24,21 @@ const EthereumFaucet = ({ Component, pageProps }: AppProps) => (
     <Head>
       <title>Claim Görli ETH</title>
     </Head>
-    <DAppProvider config={config}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Layout>
-          <Content>
-            <Header />
-            <Component {...pageProps} />
-            <OpenSourceMemo />
-          </Content>
-          <Footer />
-        </Layout>
-      </ThemeProvider>
-    </DAppProvider>
+    <CaptchaProvider>
+      <DAppProvider config={config}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Layout>
+            <Content>
+              <Header />
+              <Component {...pageProps} />
+              <OpenSourceMemo />
+            </Content>
+            <Footer />
+          </Layout>
+        </ThemeProvider>
+      </DAppProvider>
+    </CaptchaProvider>
   </>
 )
 
