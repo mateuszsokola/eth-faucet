@@ -5,7 +5,7 @@ import { TimestampNonce } from "../../services/TimestampNonce"
 
 type NonceResponse = DefaultResponse<NonceResponseBody>
 
-const handler = async (_: NextApiRequest, res: NextApiResponse<NonceResponse>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<NonceResponse>) => {
   const nonceService = new TimestampNonce()
   const nonce = await nonceService.generate()
 
