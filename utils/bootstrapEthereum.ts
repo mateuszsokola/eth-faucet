@@ -4,14 +4,15 @@ import { privilegedWallets } from "../consts/wallets"
 import { Ethereum } from "../services/Ethereum"
 import { TimestampNonce } from "../services/TimestampNonce"
 import { WalletClassification } from "../services/WalletClassification"
-import { bootstrapTransactionHistory } from "./bootstrapTransactionHistory"
+import { bootstrapTransactionHistory, TransactionHistoryType } from "./bootstrapTransactionHistory"
 
 export const bootstrapEthereum = (chainId: number = Goerli.chainId) => {
   // Wallet Classification Service
   const classificationService = new WalletClassification(privilegedWallets)
 
   // Transaction History Service
-  const transactionHistoryService = bootstrapTransactionHistory(chainId)
+  const enabledTransactionChecks = process.env.ENABLE_TRANSACTION_CHECKS as TransactionHistoryType
+  const transactionHistoryService = bootstrapTransactionHistory(enabledTransactionChecks, { chainId })
 
   // Nonce Service
   const nonceService = new TimestampNonce()
